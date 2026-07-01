@@ -1,385 +1,408 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth bg-[#090909] text-[#F4F4F4]">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex Winter | Software Engineer & Consultant</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        darkBg: '#090909',
-                        panelBg: '#111111',
-                        cardBg: '#181818',
-                        textMain: '#F4F4F4',
-                        textMuted: '#9B9B9B',
-                        accentBlue: '#4F8CFF',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex Winter Software Ltd — Software Engineering, No Nonsense</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #10151C;
+    --panel: #161D27;
+    --line: #2A3441;
+    --ink: #E7ECF2;
+    --muted: #8B98A8;
+    --accent: #F2B705;
+    --accent-dim: #7A6108;
+    --max: 880px;
+  }
 
-        /* Subtle Background Grid Line System */
-        .grid-bg {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-        }
+  *{ box-sizing:border-box; margin:0; padding:0; }
 
-        /* Masking utilities for text reveals */
-        .reveal-wrapper {
-            position: relative;
-            overflow: hidden;
-        }
+  html{ scroll-behavior:smooth; }
 
-        /* Soft vignette gradient fade for the profile picture */
-        .image-vignette {
-            mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
-            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
-        }
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
 
-        /* Smooth custom cursor glow */
-        #cursor-glow {
-            pointer-events: none;
-            background: radial-gradient(400px circle at center, rgba(79, 140, 255, 0.04), transparent 80%);
-            transform: translate(-50%, -50%);
-            transition: opacity 0.3s ease;
-        }
-    </style>
+  a{ color:inherit; }
+
+  .wrap{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  ::selection{ background:var(--accent); color:#10151C; }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+  }
+
+  /* ---------- topbar ---------- */
+  header.topbar{
+    border-bottom:1px solid var(--line);
+    padding:20px 0;
+  }
+  .topbar .wrap{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .brand{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:14px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    font-weight:500;
+  }
+  .brand span{ color:var(--accent); }
+  .topbar nav a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    text-decoration:none;
+    margin-left:26px;
+    letter-spacing:0.03em;
+  }
+  .topbar nav a:hover{ color:var(--ink); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:76px 0 56px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:40px;
+    align-items:center;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--accent);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  h1{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:clamp(30px, 4.6vw, 46px);
+    line-height:1.18;
+    letter-spacing:-0.01em;
+    max-width:11ch;
+  }
+  .hero-sub{
+    margin-top:20px;
+    font-size:17px;
+    color:var(--muted);
+    max-width:46ch;
+  }
+  .photo{
+    width:148px;
+    height:148px;
+    border-radius:50%;
+    object-fit:cover;
+    border:1px solid var(--line);
+    filter:grayscale(15%);
+    justify-self:end;
+  }
+
+  /* manifest strip */
+  .manifest{
+    margin-top:40px;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    border:1px solid var(--line);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+  }
+  .manifest div{
+    padding:14px 16px;
+    border-right:1px solid var(--line);
+  }
+  .manifest div:last-child{ border-right:none; }
+  .manifest .k{ color:var(--muted); display:block; margin-bottom:6px; letter-spacing:0.03em; }
+  .manifest .v{ color:var(--ink); font-weight:500; }
+
+  .cta-row{
+    margin-top:34px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    text-decoration:none;
+    padding:12px 20px;
+    border:1px solid var(--line);
+    letter-spacing:0.02em;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .btn.primary{
+    background:var(--accent);
+    color:#10151C;
+    border-color:var(--accent);
+    font-weight:600;
+  }
+  .btn.primary:hover{ background:#ffcb33; border-color:#ffcb33; }
+  .btn.ghost{ color:var(--muted); }
+  .btn.ghost:hover{ color:var(--ink); border-color:var(--ink); }
+
+  /* ---------- section shell ---------- */
+  section{
+    padding:64px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--accent);
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    display:block;
+    margin-bottom:14px;
+  }
+  h2{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:22px;
+    margin-bottom:32px;
+    letter-spacing:-0.01em;
+  }
+
+  /* ---------- principles ---------- */
+  .principles{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .principle{
+    background:var(--bg);
+    padding:26px 24px;
+  }
+  .principle .num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+  .principle h3{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:17px;
+    font-weight:600;
+    margin:10px 0 10px;
+  }
+  .principle p{
+    color:var(--muted);
+    font-size:14.5px;
+  }
+
+  /* ---------- stack ---------- */
+  .stack-cols{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:32px;
+  }
+  .stack-col h4{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    margin-bottom:12px;
+  }
+  .stack-col ul{ list-style:none; }
+  .stack-col li{
+    font-size:14.5px;
+    padding:6px 0;
+    border-top:1px solid var(--line);
+  }
+  .stack-col li:first-child{ border-top:none; }
+
+  /* ---------- track record ---------- */
+  .record p{
+    color:var(--muted);
+    font-size:15px;
+    max-width:62ch;
+  }
+  .record strong{ color:var(--ink); }
+
+  /* ---------- contact ---------- */
+  .contact{ border-bottom:none; padding-bottom:80px; }
+  .contact h2{ font-size:24px; }
+  .contact-lines{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:14.5px;
+    margin-top:6px;
+  }
+  .contact-lines div{ padding:10px 0; border-top:1px solid var(--line); }
+  .contact-lines div:first-child{ border-top:none; }
+  .contact-lines a{ text-decoration:none; color:var(--ink); }
+  .contact-lines a:hover{ color:var(--accent); }
+  .contact-lines .k{ color:var(--muted); display:inline-block; width:110px; }
+
+  footer{
+    padding:24px 0 40px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+  footer .wrap{ display:flex; justify-content:space-between; }
+
+  @media (max-width:640px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .photo{ justify-self:start; width:88px; height:88px; }
+    .manifest{ grid-template-columns:1fr 1fr; }
+    .manifest div:nth-child(2){ border-right:none; }
+    .principles{ grid-template-columns:1fr; }
+    .stack-cols{ grid-template-columns:1fr; }
+    .topbar nav a{ margin-left:16px; }
+    footer .wrap{ flex-direction:column; gap:6px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+  }
+</style>
 </head>
-<body class="grid-bg min-h-screen relative antialiased selection:bg-accentBlue/30 selection:text-white">
+<body>
 
-    <div id="cursor-glow" class="fixed top-0 left-0 w-[800px] h-[800px] rounded-full z-0 opacity-0 pointer-events-none hidden md:block"></div>
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">Alex Winter <span>/</span> Software Ltd</div>
+    <nav>
+      <a href="#principles">Principles</a>
+      <a href="#stack">Stack</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
 
-    <header id="nav" class="fixed top-0 left-0 w-full z-50 px-6 py-6 md:px-16 flex justify-between items-center bg-darkBg/70 backdrop-blur-md border-b border-white/[0.03] opacity-0">
-        <div class="text-xs uppercase tracking-[0.2em] font-medium text-textMain">
-            Alex Winter <span class="text-textMuted font-light">Software Ltd</span>
-        </div>
-        <a href="mailto:ajwinter42@gmail.com" class="text-xs uppercase tracking-wider text-textMuted hover:text-accentBlue transition-colors duration-300 flex items-center gap-2">
-            Available for Projects <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
-        </a>
-    </header>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Software Engineering Contractor</div>
+      <h1>Software built right, shipped fast.</h1>
+      <p class="hero-sub">I'm Alex Winter — a software engineer who builds and leads teams that ship high-quality, secure software on tight timelines, without cutting corners on the way there.</p>
 
-    <main class="relative z-10 max-w-7xl mx-auto px-6 md:px-16 pt-32 pb-24 space-y-36 md:space-y-56">
+      <div class="manifest">
+        <div><span class="k">Experience</span><span class="v">8+ years</span></div>
+        <div><span class="k">Core stack</span><span class="v">PHP · JavaScript</span></div>
+        <div><span class="k">Method</span><span class="v">Agile / TDD</span></div>
+        <div><span class="k">Focus</span><span class="v">Quality &amp; Security</span></div>
+      </div>
 
-        <section id="hero" class="min-h-[75vh] flex flex-col-reverse md:flex-row items-center justify-between gap-12 pt-8">
-            <div class="w-full md:w-7/12 space-y-8">
-                <div class="space-y-4">
-                    <div class="reveal-wrapper">
-                        <h1 id="hero-name" class="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-textMain">
-                            Alex Winter
-                        </h1>
-                    </div>
-                    <div class="reveal-wrapper">
-                        <p id="hero-title" class="text-2xl sm:text-4xl md:text-5xl font-medium tracking-tight text-textMuted">
-                            Software Engineer.
-                        </p>
-                    </div>
-                </div>
-                
-                <p id="hero-subtext" class="text-lg md:text-xl text-textMuted max-w-xl font-light leading-relaxed opacity-0 transform translate-y-4">
-                    Building scalable web platforms for ambitious companies. Based in Hampshire, UK.
-                </p>
+      <div class="cta-row">
+        <a class="btn primary" href="#contact">Get in touch</a>
+        <a class="btn ghost" href="#principles">How I work</a>
+      </div>
+    </div>
+    <img class="photo" src="profile.jpg" alt="Portrait of Alex Winter">
+  </div>
+</section>
 
-                <div id="hero-metrics" class="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-white/[0.05] opacity-0 transform translate-y-4">
-                    <div>
-                        <div class="text-2xl font-semibold text-textMain tracking-tight">13+ Years</div>
-                        <div class="text-xs uppercase tracking-wider text-textMuted mt-1">Experience</div>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-semibold text-textMain tracking-tight">Enterprise</div>
-                        <div class="text-xs uppercase tracking-wider text-textMuted mt-1">Platforms</div>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-semibold text-textMain tracking-tight">Team Lead</div>
-                        <div class="text-xs uppercase tracking-wider text-textMuted mt-1">Expertise</div>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-semibold text-textMain tracking-tight">PHP &bull; Laravel</div>
-                        <div class="text-xs uppercase tracking-wider text-textMuted mt-1">Core Tech</div>
-                    </div>
-                </div>
-            </div>
+<section id="principles">
+  <div class="wrap">
+    <span class="tag">Principles</span>
+    <h2>What I build on</h2>
+    <div class="principles">
+      <div class="principle">
+        <div class="num">01</div>
+        <h3>Quality is not optional</h3>
+        <p>SOLID design, test-driven development, and code review discipline. Fast delivery never comes at the expense of software that holds up.</p>
+      </div>
+      <div class="principle">
+        <div class="num">02</div>
+        <h3>Security by default</h3>
+        <p>Security practices are built in from the first commit, not bolted on before launch. Fewer surprises, less rework, safer products.</p>
+      </div>
+      <div class="principle">
+        <div class="num">03</div>
+        <h3>Speed through agile discipline</h3>
+        <p>Short, honest iterations with clear priorities. Momentum comes from cutting scope wisely, not from cutting corners.</p>
+      </div>
+      <div class="principle">
+        <div class="num">04</div>
+        <h3>Teams run on the right metrics</h3>
+        <p>Years spent learning which tools and metrics actually move a team — and which just look good on a dashboard. I build teams around the former.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <div class="w-full md:w-5/12 flex justify-center md:justify-end">
-                <div class="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[400px] md:h-[400px]">
-                    <img id="hero-img" 
-                         src="Polish_20260504_121702121.jpg" 
-                         alt="Alex Winter" 
-                         class="w-full h-full object-cover image-vignette opacity-0 grayscale filter contrast-[1.05]" />
-                </div>
-            </div>
-        </section>
+<section id="stack">
+  <div class="wrap">
+    <span class="tag">Toolset</span>
+    <h2>What I work with</h2>
+    <div class="stack-cols">
+      <div class="stack-col">
+        <h4>Languages</h4>
+        <ul>
+          <li>PHP</li>
+          <li>JavaScript / TypeScript</li>
+          <li>SQL</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h4>Frameworks</h4>
+        <ul>
+          <li>Laravel · Symfony · Slim</li>
+          <li>React · Vue · Angular</li>
+          <li>Tailwind CSS</li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h4>Practice</h4>
+        <ul>
+          <li>Agile / Scrum</li>
+          <li>Test-Driven Development</li>
+          <li>CI, Docker, AWS</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <section class="aura-trigger py-20 flex items-center justify-center border-y border-white/[0.02]">
-            <div class="text-center max-w-4xl mx-auto space-y-4">
-                <p class="text-xs uppercase tracking-[0.3em] text-accentBlue font-semibold">The Philosophy</p>
-                <h2 class="aura-text text-4xl sm:text-6xl md:text-[84px] font-bold tracking-tight text-white leading-none opacity-20 transition-all duration-1000">
-                    I don't build websites.<br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-textMain via-textMain to-accentBlue/70">I engineer software.</span>
-                </h2>
-            </div>
-        </section>
+<section class="record">
+  <div class="wrap">
+    <span class="tag">Track record</span>
+    <h2>Where this comes from</h2>
+    <p><strong>8+ years</strong> designing, building, and scaling platforms in the PHP and JavaScript ecosystem — from greenfield builds to legacy rescues. Time spent as both engineer and team lead, mentoring developers, setting engineering standards, and shipping RESTful APIs and full-stack features for production platforms.</p>
+  </div>
+</section>
 
-        <section class="space-y-12">
-            <div class="space-y-2">
-                <p class="text-xs uppercase tracking-[0.2em] text-textMuted">Capabilities</p>
-                <h3 class="text-2xl md:text-3xl font-medium tracking-tight">
-                    Need a senior engineer that delivers without constant management?
-                </h3>
-            </div>
+<section id="contact" class="contact">
+  <div class="wrap">
+    <span class="tag">Contact</span>
+    <h2>Let's talk about your project.</h2>
+    <div class="contact-lines">
+      <div><span class="k">Email</span><a href="mailto:ajwinter42@gmail.com">ajwinter42@gmail.com</a></div>
+      <div><span class="k">Phone</span><a href="tel:+447783345369">07783 345369</a></div>
+      <div><span class="k">Company</span>Alex Winter Software Ltd</div>
+    </div>
+  </div>
+</section>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="p-8 bg-cardBg/40 border border-white/[0.03] rounded-sm hover:border-white/[0.08] hover:-translate-y-1 transition-all duration-300 group">
-                    <div class="w-8 h-8 rounded-full bg-panelBg flex items-center justify-center mb-6 text-accentBlue group-hover:text-white transition-colors">
-                        <i data-lucide="layers" class="w-4 h-4"></i>
-                    </div>
-                    <h4 class="text-lg font-medium mb-3">Enterprise Applications</h4>
-                    <p class="text-sm text-textMuted leading-relaxed">
-                        Architecture-first, large-scale systems utilizing Laravel and robust API designs optimized for complex business requirements.
-                    </p>
-                </div>
-                <div class="p-8 bg-cardBg/40 border border-white/[0.03] rounded-sm hover:border-white/[0.08] hover:-translate-y-1 transition-all duration-300 group">
-                    <div class="w-8 h-8 rounded-full bg-panelBg flex items-center justify-center mb-6 text-accentBlue group-hover:text-white transition-colors">
-                        <i data-lucide="users" class="w-4 h-4"></i>
-                    </div>
-                    <h4 class="text-lg font-medium mb-3">Technical Leadership</h4>
-                    <p class="text-sm text-textMuted leading-relaxed">
-                        Mentoring developers via clean code patterns, architecture reviews, and SMART milestones targeted to level-up teams.
-                    </p>
-                </div>
-                <div class="p-8 bg-cardBg/40 border border-white/[0.03] rounded-sm hover:border-white/[0.08] hover:-translate-y-1 transition-all duration-300 group">
-                    <div class="w-8 h-8 rounded-full bg-panelBg flex items-center justify-center mb-6 text-accentBlue group-hover:text-white transition-colors">
-                        <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                    </div>
-                    <h4 class="text-lg font-medium mb-3">Modernization</h4>
-                    <p class="text-sm text-textMuted leading-relaxed">
-                        Breathing performant lifecycle stability into legacy systems and migrating out old tech debt efficiently without downtime.
-                    </p>
-                </div>
-            </div>
-        </section>
+<footer>
+  <div class="wrap">
+    <span>© 2026 Alex Winter Software Ltd</span>
+    <span>Registered in England &amp; Wales</span>
+  </div>
+</footer>
 
-        <section class="space-y-16">
-            <div>
-                <p class="text-xs uppercase tracking-[0.2em] text-textMuted mb-2">Selected Tenure</p>
-                <div class="h-[1px] w-full bg-gradient-to-r from-white/[0.08] to-transparent"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start relative py-6">
-                <div class="md:col-span-3">
-                    <span class="text-6xl md:text-8xl font-bold text-white/10 tracking-tighter sticky top-28">2023</span>
-                </div>
-                <div class="md:col-span-9 space-y-4">
-                    <div>
-                        <h3 class="text-xl md:text-2xl font-medium text-textMain">Mitratech Prevalent</h3>
-                        <p class="text-sm text-accentBlue uppercase tracking-wider mt-0.5">Software Engineer</p>
-                    </div>
-                    <ul class="space-y-3 max-w-2xl text-textMuted text-sm font-light leading-relaxed">
-                        <li class="flex items-start gap-3"><span class="text-accentBlue mt-1">&mdash;</span> Led platform improvements and structural upgrades across an enterprise full-stack Laravel application.</li>
-                        <li class="flex items-start gap-3"><span class="text-accentBlue mt-1">&mdash;</span> Promoted and standardized stronger Automated Testing practices across the core developer cohort.</li>
-                        <li class="flex items-start gap-3"><span class="text-accentBlue mt-1">&mdash;</span> Oversaw the complete lifecycle of scalable queued background processes and RESTful architecture.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start relative py-6">
-                <div class="md:col-span-3">
-                    <span class="text-6xl md:text-8xl font-bold text-white/10 tracking-tighter sticky top-28">2016</span>
-                </div>
-                <div class="md:col-span-9 space-y-4">
-                    <div>
-                        <h3 class="text-xl md:text-2xl font-medium text-textMain">Efficio Consulting</h3>
-                        <p class="text-sm text-accentBlue uppercase tracking-wider mt-0.5">Software Engineer / Team Lead</p>
-                    </div>
-                    <ul class="space-y-3 max-w-2xl text-textMuted text-sm font-light leading-relaxed">
-                        <li class="flex items-start gap-3"><span class="text-accentBlue mt-1">&mdash;</span> Initiated engineering-wide infrastructure enhancements optimizing velocity, reliability, and code quality.</li>
-                        <li class="flex items-start gap-3"><span class="text-accentBlue mt-1">&mdash;</span> Guided team development on numerous cross-platform greenfield deployments and legacy rewrites.</li>
-                        <li class="flex items-start gap-3"><span class="text-accentBlue mt-1">&mdash;</span> Championed Test-Driven Development (TDD) methodologies and redeveloped key integrations with GoLang.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="space-y-12">
-            <div>
-                <p class="text-xs uppercase tracking-[0.2em] text-textMuted">Core Philosophy</p>
-                <h3 class="text-2xl md:text-3xl font-medium tracking-tight mt-2">Engineering Principles</h3>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.04]">
-                <div class="p-8 bg-darkBg space-y-2">
-                    <h4 class="text-sm font-medium text-textMain uppercase tracking-wider">Architecture</h4>
-                    <p class="text-sm text-textMuted font-light">Building clean, scalable, decoupled systems that remain highly maintainable years into production.</p>
-                </div>
-                <div class="p-8 bg-darkBg space-y-2">
-                    <h4 class="text-sm font-medium text-textMain uppercase tracking-wider">Testing</h4>
-                    <p class="text-sm text-textMuted font-light">Earning absolute business and runtime confidence through deliberate TDD rather than pure hope.</p>
-                </div>
-                <div class="p-8 bg-darkBg space-y-2">
-                    <h4 class="text-sm font-medium text-textMain uppercase tracking-wider">Performance</h4>
-                    <p class="text-sm text-textMuted font-light">Every millisecond stripped off response delivery is a direct optimization of product UX and conversion.</p>
-                </div>
-                <div class="p-8 bg-darkBg space-y-2">
-                    <h4 class="text-sm font-medium text-textMain uppercase tracking-wider">Security</h4>
-                    <p class="text-sm text-textMuted font-light">Engineering robust threat-modeled safeguards directly into data schemas and routing layers by design.</p>
-                </div>
-                <div class="p-8 bg-darkBg space-y-2">
-                    <h4 class="text-sm font-medium text-textMain uppercase tracking-wider">Scalability</h4>
-                    <p class="text-sm text-textMuted font-light">Ensuring background workers, memory structures, and queries effortlessly survive compounding data scaling.</p>
-                </div>
-                <div class="p-8 bg-darkBg space-y-2">
-                    <h4 class="text-sm font-medium text-textMain uppercase tracking-wider">Developer Experience</h4>
-                    <p class="text-sm text-textMuted font-light">Great modern systems require reliable environment tooling, fast testing runner feedback, and predictable paths.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="space-y-8 text-center max-w-4xl mx-auto">
-            <p class="text-xs uppercase tracking-[0.2em] text-textMuted">Proficient Stack</p>
-            <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 text-lg md:text-xl font-light text-textMain">
-                <span>PHP</span><span class="text-white/10">&bull;</span>
-                <span>Laravel</span><span class="text-white/10">&bull;</span>
-                <span>TypeScript</span><span class="text-white/10">&bull;</span>
-                <span>React</span><span class="text-white/10">&bull;</span>
-                <span>Vue</span><span class="text-white/10">&bull;</span>
-                <span>Angular</span><span class="text-white/10">&bull;</span>
-                <span>SQL</span><span class="text-white/10">&bull;</span>
-                <span>Docker</span><span class="text-white/10">&bull;</span>
-                <span>AWS Services</span><span class="text-white/10">&bull;</span>
-                <span>TDD</span>
-            </div>
-        </section>
-
-        <section class="focus-trigger min-h-[50vh] flex flex-col items-center justify-center border-t border-white/[0.03]">
-            <div class="text-center max-w-3xl space-y-4">
-                <p class="text-xs uppercase tracking-[0.2em] text-textMuted">Current Intent</p>
-                <h3 class="focus-text text-3xl md:text-5xl font-light tracking-tight text-textMain leading-snug opacity-20 transition-all duration-1000">
-                    Helping companies ship software faster <span class="text-accentBlue font-normal">without sacrificing engineering quality</span>.
-                </h3>
-            </div>
-        </section>
-
-        <section class="pt-16 border-t border-white/[0.05] space-y-12">
-            <div class="flex flex-col md:flex-row justify-between items-start gap-8">
-                <div class="space-y-4">
-                    <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">Let's build software that lasts.</h2>
-                    <p class="text-sm text-textMuted font-light">Available for engineering consulting and high-level platform design via Alex Winter Software Ltd.</p>
-                </div>
-                <a href="mailto:ajwinter42@gmail.com" class="px-6 py-3 bg-panelBg border border-white/[0.08] hover:border-accentBlue text-sm text-textMain tracking-wide rounded-sm transition-all duration-300">
-                    Initiate Discussion
-                </a>
-            </div>
-
-            <div class="flex flex-wrap justify-between items-center gap-4 pt-8 border-t border-white/[0.02] text-xs text-textMuted">
-                <div>&copy; 2026 Alex Winter Software Ltd. All rights reserved.</div>
-                <div class="flex gap-6 font-light">
-                    <a href="mailto:ajwinter42@gmail.com" class="hover:text-textMain transition-colors">Email</a>
-                    <a href="https://linkedin.com" target="_blank" class="hover:text-textMain transition-colors">LinkedIn</a>
-                    <a href="https://github.com" target="_blank" class="hover:text-textMain transition-colors">GitHub</a>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
-
-        // Register ScrollTrigger
-        gsap.registerPlugin(ScrollTrigger);
-
-        document.addEventListener("DOMContentLoaded", () => {
-            
-            // 1. Subtle Radial Glow Tracking the Mouse Pointer
-            const glow = document.getElementById('cursor-glow');
-            document.addEventListener('mousemove', (e) => {
-                gsap.to(glow, {
-                    left: e.clientX,
-                    top: e.clientY,
-                    duration: 0.6,
-                    ease: "power2.out"
-                });
-            });
-            document.addEventListener('mouseenter', () => glow.style.opacity = '1');
-            document.addEventListener('mouseleave', () => glow.style.opacity = '0');
-
-            // 2. High-End Reveal Intro Load Sequence
-            const tl = gsap.timeline();
-
-            // Set Initial states
-            gsap.set(["#hero-name", "#hero-title"], { yPercent: 100 });
-            
-            tl.to("#hero-img", {
-                opacity: 1,
-                scale: 1,
-                duration: 1.6,
-                startAt: { scale: 1.08 },
-                ease: "power3.out"
-            })
-            .to(["#hero-name", "#hero-title"], {
-                yPercent: 0,
-                duration: 1,
-                stagger: 0.15,
-                ease: "power4.out"
-            }, "-=1.2")
-            .to("#hero-subtext", {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "power2.out"
-            }, "-=0.6")
-            .to(["#nav", "#hero-metrics"], {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                stagger: 0.2,
-                ease: "power2.out"
-            }, "-=0.4");
-
-            // 3. Statement Section Dynamic Aura Farm Accentuation
-            gsap.to(".aura-text", {
-                scrollTrigger: {
-                    trigger: ".aura-trigger",
-                    start: "top 75%",
-                    end: "bottom 45%",
-                    scrub: true,
-                },
-                opacity: 1,
-                scale: 1.02,
-                ease: "none"
-            });
-
-            // 4. Focus Intermission Dynamic Fade Accentuation
-            gsap.to(".focus-text", {
-                scrollTrigger: {
-                    trigger: ".focus-trigger",
-                    start: "top 80%",
-                    end: "bottom 60%",
-                    scrub: true,
-                },
-                opacity: 1,
-                ease: "none"
-            });
-        });
-    </script>
 </body>
 </html>
